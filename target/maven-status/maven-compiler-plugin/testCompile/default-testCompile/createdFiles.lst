@@ -1,0 +1,4 @@
+helper\ReadData.class
+tests\RegistrationTest.class
+tests\TestBase.class
+data\ExcelReader.class

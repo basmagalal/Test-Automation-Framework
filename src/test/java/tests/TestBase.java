@@ -1,12 +1,12 @@
 package tests;
 
+import com.beust.jcommander.Parameter;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -16,15 +16,16 @@ import static helper.ReadData.captureScreenshoot;
 
 public class TestBase {
 
-    public static WebDriver driver;
+
+   public static WebDriver driver;
 
     @BeforeSuite
     @Parameters("browser")
-    public void setUpDriver(@Optional("chrome") String browser){
+    public void setUpDriver( String browser){
 
         if(browser.equalsIgnoreCase("chrome")){
-        WebDriverManager.chromedriver().setup();
-        driver =new ChromeDriver();
+            WebDriverManager.chromedriver().setup();
+            driver =new ChromeDriver();
         }
 
         else if (browser.equalsIgnoreCase("edge")){
@@ -40,13 +41,16 @@ public class TestBase {
             WebDriverManager.iedriver().setup();
             driver =new InternetExplorerDriver();
         }
-
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(300, TimeUnit.MILLISECONDS);
         driver.get("https://demo.nopcommerce.com/");
 
-
     }
+
+
+
+
+
 
     @AfterMethod
     public void recordFailure(ITestResult result){
@@ -59,7 +63,7 @@ public class TestBase {
 
     @AfterSuite
     public void StopDriver() {
-        driver.quit();
+      driver.close();
 
     }
 

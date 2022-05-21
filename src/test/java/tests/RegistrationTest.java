@@ -1,10 +1,14 @@
 package tests;
 
+import data.ExcelReader;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginPage;
 import pages.RegistrationPage;
+
+import java.io.IOException;
 
 public class RegistrationTest extends TestBase{
 
@@ -13,31 +17,32 @@ public class RegistrationTest extends TestBase{
 
     LoginPage loginPage ;
 
-    @Test(priority = 1)
-    public void userRegistrationTest(){
+    @DataProvider(name="Exceldata")
+
+    public Object[][] userData() throws IOException {
+        ExcelReader excelReader=new ExcelReader();
+        return excelReader.readXSLS();
+
+    }
+
+    @Test(dataProvider = "Exceldata")
+
+    public void userRegistrationTest(String fname,String lname,String email, String pass){
 
         home=new HomePage(driver);
         home.openRegestrationPage();
         registerPage=new RegistrationPage(driver);
-        registerPage.userRegestration("omar","mohamed","omar74@gmail.com","123456");
+        registerPage.userRegestration(fname,lname,email,pass);
         Assert.assertTrue(registerPage.RegistersuccessAssert.getText().contains("Your registration completed"));
-
-    }
-
-    @Test(dependsOnMethods = "userRegistrationTest")
-    public void RegisterUserCanLogOut(){
-
         registerPage.logoutbtn.click();
-    }
-
-    @Test(dependsOnMethods = "RegisterUserCanLogOut")
-    public  void RegisterUserCanLogIn(){
 
         home.openLoginPage();
         loginPage=new LoginPage(driver);
-        loginPage.userLogin("omar74@gmail.com","123456");
+        loginPage.userLogin(email,pass);
         Assert.assertTrue(loginPage.loginSuccessAssert.getText().contains("Welcome to our store"));
+        registerPage.logoutbtn.click();
 
     }
+
 
 }
