@@ -1,6 +1,7 @@
 package tests;
 
 import com.beust.jcommander.Parameter;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,14 +15,14 @@ import java.util.concurrent.TimeUnit;
 
 import static helper.ReadData.captureScreenshoot;
 
-public class TestBase {
+public class TestBase extends AbstractTestNGCucumberTests {
 
 
    public static WebDriver driver;
 
     @BeforeSuite
     @Parameters("browser")
-    public void setUpDriver( String browser){
+    public void setUpDriver( @Optional ("chrome") String browser){
 
         if(browser.equalsIgnoreCase("chrome")){
             WebDriverManager.chromedriver().setup();
