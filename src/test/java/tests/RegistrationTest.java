@@ -33,7 +33,20 @@ public class RegistrationTest extends TestBase{
         home.openRegestrationPage();
         registerPage=new RegistrationPage(driver);
         registerPage.userRegestration(fname,lname,email,pass);
-        Assert.assertTrue(registerPage.RegistersuccessAssert.getText().contains("Your registration completed"));
+      /*  Assert.assertTrue(registerPage.logoutbtn.isDisplayed());
+        registerPage.logoutbtn.click();
+
+        home.openLoginPage();
+        loginPage=new LoginPage(driver);
+        loginPage.userLogin(email,pass);
+        Assert.assertTrue(loginPage.loginSuccessAssert.getText().contains("Welcome to our store"));
+       registerPage.logoutbtn.click();*/
+
+    }
+    @Test(dataProvider = "Exceldata")
+    public void loginTest(String email, String pass){
+
+        Assert.assertTrue(registerPage.logoutbtn.isDisplayed());
         registerPage.logoutbtn.click();
 
         home.openLoginPage();
@@ -41,7 +54,6 @@ public class RegistrationTest extends TestBase{
         loginPage.userLogin(email,pass);
         Assert.assertTrue(loginPage.loginSuccessAssert.getText().contains("Welcome to our store"));
         registerPage.logoutbtn.click();
-
     }
 
 

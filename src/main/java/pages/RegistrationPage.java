@@ -3,6 +3,7 @@ package pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 
 
@@ -35,10 +36,18 @@ public class RegistrationPage extends PageBase {
     @FindBy(id = "register-button")
     WebElement registerbtn ;
 
-    @FindBy(css = "div.result")
+   /* @FindAll({
+            @FindBy(css = "div.result"),
+            @FindBy(xpath = "//div[@class='result' and contains(text(),'Your registration completed')] ")
+    })
    public WebElement RegistersuccessAssert;
+*/
+    @FindAll({
+            @FindBy(linkText = "Log out"),
+            @FindBy(xpath = "//a[@class='ico-logout' and contains( text() ,'Log out')]"),
+            @FindBy(xpath = "//div[@class='header-links' ]//a[@href='https://demo.nopcommerce.com/' and contains(text(),'Log out')]")
+    })
 
-    @FindBy(linkText = "Log out")
     public WebElement logoutbtn;
 
     public void userRegestration(String strFName,String strLName,String strEmail,String strPassword){
